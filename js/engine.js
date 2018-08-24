@@ -1,3 +1,7 @@
+import Resources from './resources.js';
+import App from './gem.js';
+
+
 /* Engine.js
  * This file provides the game loop functionality (update entities and render),
  * draws the initial game board on the screen, and then calls the update and
@@ -18,6 +22,8 @@ let Engine = (function(global) {
    * create the canvas element, grab the 2D context for that canvas
    * set the canvas elements height/width and add it to the DOM.
    */
+  let resources = new Resources();
+  let game = new App();  
   let doc = global.document,
     win = global.window,
     canvas = doc.createElement('canvas'),
@@ -90,11 +96,11 @@ let Engine = (function(global) {
    * render methods.
    */
   function updateEntities(dt) {
-    allEnemies.forEach(function(enemy) {
+    game.allEnemies.forEach(function(enemy) {
       enemy.update(dt);
     });
-    player.update();
-    gem.update();
+    game.player.update();
+    game.gem.update();
   }
 
   /* This function initially draws the "game level", it will then call
@@ -135,10 +141,9 @@ let Engine = (function(global) {
          * so that we get the benefits of caching these images, since
          * we're using them over and over.
          */
-        ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+        ctx.drawImage(resources.get(rowImages[row]), col * 101, row * 83);
       }
     }
-
     renderEntities();
   }
 
@@ -150,12 +155,11 @@ let Engine = (function(global) {
     /* Loop through all of the objects within the allEnemies array and call
      * the render function you have defined.
      */
-    gem.render();
-    allEnemies.forEach(function(enemy) {
+    game.gem.render();
+    game.allEnemies.forEach(function(enemy) {
       enemy.render();
     });
-
-    player.render();
+    game.player.render();
   }
 
   /* This function does nothing but it could have been a good place to
@@ -170,7 +174,7 @@ let Engine = (function(global) {
    * draw our game level. Then set init as the callback method, so that when
    * all of these images are properly loaded our game will start.
    */
-  Resources.load([
+  resources.load([
     'images/stone-block.png',
     'images/water-block.png',
     'images/grass-block.png',
@@ -184,11 +188,6 @@ let Engine = (function(global) {
     'images/Gem Orange Sm.png',
     'images/Gem Green Sm.png'
   ]);
-  Resources.onReady(init);
+  resources.onReady(init);
 
-  /* Assign the canvas' context object to the global variable (the window
-   * object when run in a browser) so that developers can use it more easily
-   * from within their app.js files.
-   */
-  global.ctx = ctx;
 })(this);
