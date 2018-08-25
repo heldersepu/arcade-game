@@ -14,7 +14,7 @@ export default class Player extends BaseGameObject {
 
   // Hidden p text from li items is passed into this method via forEach loop
   setSprite(char) {   
-    playerSprites = {
+    let playerSprites = {
       boy: 'images/char-boy.png',
       catGirl: 'images/char-cat-girl.png',
       hornGirl: 'images/char-horn-girl.png',
