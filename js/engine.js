@@ -100,49 +100,7 @@ class Engine {
    * on the entities themselves within your app.js file).
    */
   update(dt) {
-    this.updateEntities(dt);
-    // checkCollisions();
-  }
-
-  checkCollisions() {
-    // When collision occurs, subtracts a life, updates lives displayed in sidebar, and updates score that will be displayed in modal if no lives remaining
-    // if ((player.x < (this.x + 50)) && ((player.x + 17) > this.x) && (player.y < (this.y + 50)) && ((50 + player.y) > this.y)) {
-    //   player.x = 200;
-    //   player.y = 400;
-    //   lives--;
-    //   sidebarLives.innerHTML = lives;
-    //   modalScore.innerHTML = score;
-    //   if (lives === 0) {
-    //     isDead = true;
-    //     // Calls function that adds class that sets modal to display: block
-    //     showModal();
-    //   }
-    // }
-
-    // Not sure why this if statement only works when player approaches gem from below (a higher y value)
-    // if ( ((Math.abs( (player.imgWidth + player.x) - (this.x + this.imgWidth) ) < 55)) && ((Math.abs( (player.imgHeight + player.y) - (this.y + this.imgHeight) ) < 55)) ) {
-    //   // Generates new gem of random color and random x and y value from arrays
-    //   this.x = this.gemX[Math.floor(Math.random() * this.gemX.length)];
-    //   this.y = this.gemY[Math.floor(Math.random() * this.gemY.length)];
-    //   this.sprite = this.collectibles[Math.floor(Math.random() * 3)];
-    //   score += 5;
-    //   sidebarScore.innerHTML = score;
-    // }
-  }
-
-  /* This is called by the update function and loops through all of the
-   * objects within your allEnemies array as defined in app.js and calls
-   * their update() methods. It will then call the update function for your
-   * player object. These update methods should focus purely on updating
-   * the data/properties related to the object. Do your drawing in your
-   * render methods.
-   */
-  updateEntities(dt) {
-    for(let k in this.game.allEnemies) { 
-      this.game.allEnemies[k].update(dt);
-    }
-    this.game.player.update();
-    this.game.gem.update();
+    this.game.updateEntities(dt);
   }
 
   /* This function initially draws the "game level", it will then call

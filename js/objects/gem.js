@@ -22,8 +22,7 @@ export default class Gem extends BaseGameObject {
     this.imgWidth = 65;
     this.imgHeight = 88;
   }
-  
-  update() {
-    
+
+  update() {    
   }
 }

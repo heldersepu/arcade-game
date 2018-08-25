@@ -10,12 +10,6 @@ export default class Player extends BaseGameObject {
 
   // When player reaches water, moves player back to starting position, and increase score by 1
   update() {
-    if (this.y === 25) {
-      this.x = 200;
-      this.y = 400;
-      score++;
-      sidebarScore.innerHTML = score;
-    }
   }
 
   // Hidden p text from li items is passed into this method via forEach loop

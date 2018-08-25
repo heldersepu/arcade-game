@@ -114,4 +114,45 @@ export default class App {
       this.playAgain();
     });
   }
+
+  /* This is called by the update function and loops through all of the
+   * objects within your allEnemies array as defined in app.js and calls
+   * their update() methods. It will then call the update function for your
+   * player object. These update methods should focus purely on updating
+   * the data/properties related to the object. Do your drawing in your
+   * render methods.
+   */
+  updateEntities(dt) {
+    for(let k in this.allEnemies) { 
+      this.allEnemies[k].update(dt);
+      // When collision occurs, subtracts a life, updates lives displayed in sidebar, 
+      // and updates score that will be displayed in modal if no lives remaining
+      if (this.allEnemies[k].collidesWith(this.player)) {
+        this.player.x = 200;
+        this.player.y = 400;
+        this.lives--;
+        this.sidebarLives.innerHTML = this.lives;
+        this.modalScore.innerHTML = this.score;
+        if (this.lives === 0) {
+          this.isDead = true;
+        }
+      }      
+    }
+
+    this.player.update();
+    if (this.player.y < 10) {
+      this.player.x = 200;
+      this.player.y = 400;
+      this.score++;
+      this.sidebarScore.innerHTML = this.score;
+    }
+
+    this.gem.update();
+    // Generates new gem of random color and random x and y value from arrays
+    if (this.gem.collidesWith(this.player)) {      
+      this.gem = new Gem(0, 0 , {x:32,y:48}, 30);
+      this.score += 5;
+      this.sidebarScore.innerHTML = this.score;
+    }
+  }
 }
