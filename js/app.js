@@ -6,8 +6,7 @@ export default class App {
   constructor() {
     this.playAgainButton = document.querySelector('.play-again');
     this.restartButton = document.querySelector('.restart');
-  
-    
+      
     // Starts lives at 3
     this.lives = 3;    
     
@@ -28,15 +27,15 @@ export default class App {
     this.modalScore.innerHTML = this.score;
     
     // ENEMY/PLAYER/GEM OBJECT INSTANTIATION
-    this.gem = new Gem(0, 0 , {x:0,y:0}, 20);
+    this.gem = new Gem(0, 0 , {x:32,y:48}, 30);
     
     // Y position of enemies (smaller number means higher up)
     this.enemyPosition = [61, 145, 227, 308];    
     this.allEnemies = [];    
-    this.player = new Player(202, 396, {x:0,y:0}, 20);
+    this.player = new Player(202, 410, {x:50,y:100}, 35);
     
     for(let k in this.enemyPosition) {     
-      this.allEnemies.push(new Enemy(0, this.enemyPosition[k], {x:0,y:0}, 20));
+      this.allEnemies.push(new Enemy(0, this.enemyPosition[k], {x:50,y:110}, 40));
     }
     
     // MODAL    

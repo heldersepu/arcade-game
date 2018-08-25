@@ -7,11 +7,11 @@ export default class BaseGameObject {
   }
 
   get centerX() {
-    return this.x - this.offset.x;
+    return this.x + this.offset.x;
   }
 
   get centerY() {
-    return this.y - this.offset.y;
+    return this.y + this.offset.y;
   }
 
   collidesWith(object) {
@@ -23,6 +23,13 @@ export default class BaseGameObject {
 
   // Draws player on screen
   render(ctx, resources) {
-    ctx.drawImage(resources.get(this.sprite), this.x, this.y)    
+    ctx.drawImage(resources.get(this.sprite), this.x, this.y)
+    if (true) { // draw some circle to show collision area
+      ctx.beginPath();
+      ctx.lineWidth=5;
+      ctx.strokeStyle = "lime";
+      ctx.arc(this.centerX, this.centerY, this.radius, 0, Math.PI*2)    
+      ctx.stroke();
+    }
   }  
 }
