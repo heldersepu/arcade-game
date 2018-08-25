@@ -1,5 +1,8 @@
-export default class Gem {
-  constructor(x, y) {
+import BaseGameObject from './base.js';
+
+export default class Gem extends BaseGameObject {
+  constructor(x, y, center, radius) {
+    super(x, y, center, radius);
     // X-axis (horizontal) values: (start from left)
     this.gemX = [17, 119, 220, 321, 422];
     // Y-axis (vertical) values (start from top)
@@ -19,12 +22,7 @@ export default class Gem {
     this.imgWidth = 65;
     this.imgHeight = 88;
   }
-
-  // Draws gem on screen
-  render(ctx, resources) {
-    ctx.drawImage(resources.get(this.sprite), this.x, this.y)
-  }
-
+  
   update() {
     
   }

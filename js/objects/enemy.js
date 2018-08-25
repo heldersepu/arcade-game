@@ -1,7 +1,8 @@
-export default class Enemy {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
+import BaseGameObject from './base.js';
+
+export default class Enemy extends BaseGameObject {
+  constructor(x, y, center, radius) {
+    super(x, y, center, radius);
     // Sets speed of enemy
     this.speed = 70 + Math.floor(Math.random() * 450);
     // The image/sprite for our enemies
@@ -17,10 +18,5 @@ export default class Enemy {
       // Math.random() function returns random number between 0 (inclusive) and 1 (exclusive). Math.floor() returns the largest integer less than or equal to a given number
       this.speed = 70 + Math.floor(Math.random() * 450);
     }
-  }
-
-  // Draws enemy on screen
-  render(ctx, resources) {
-    ctx.drawImage(resources.get(this.sprite), this.x, this.y);
   }
 };

@@ -1,9 +1,9 @@
-export default class Player {
-  constructor(x, y, speed) {
+import BaseGameObject from './base.js';
+
+export default class Player extends BaseGameObject {
+  constructor(x, y, center, radius) {
+    super(x, y, center, radius);
     this.sprite = 'images/char-boy.png';
-    this.x = x;
-    this.y = y;
-    this.speed = speed;
     this.imgWidth = 101;    // sprite image width
     this.imgHeight = 171; // sprite image height
   }
@@ -15,12 +15,7 @@ export default class Player {
       this.y = 400;
       score++;
       sidebarScore.innerHTML = score;
-      }
-  }
-
-  // Draws player on screen
-  render(ctx, resources) {
-    ctx.drawImage(resources.get(this.sprite), this.x, this.y)
+    }
   }
 
   // Hidden p text from li items is passed into this method via forEach loop
@@ -40,19 +35,19 @@ export default class Player {
   // connects keyboard input to player movement. If statements prevent player movement off screen
   handleInput(key) {
     if (key === 40 && this.y < 425) { // down
-      this.y += 25; 
+      this.y += 15; 
     }
 
-    if (key === 38) { // up
-        this.y -= 25;
+    if (key === 38 && this.y > -10) { // up
+      this.y -= 15;
     }
 
-    if (key === 37 && this.x > 0) { // left
-        this.x -= 25;
+    if (key === 37 && this.x > 5) { // left
+      this.x -= 15;
     }
 
     if (key === 39 && this.x < 400) { // right
-        this.x += 25;
+      this.x += 15;
     }
   }
 }

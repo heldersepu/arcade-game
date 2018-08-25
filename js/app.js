@@ -1,6 +1,6 @@
-import Gem from './gem.js';
-import Enemy from './enemy.js';
-import Player from './player.js';
+import Gem from './objects/gem.js';
+import Enemy from './objects/enemy.js';
+import Player from './objects/player.js';
 
 export default class App {
   constructor() {
@@ -28,15 +28,15 @@ export default class App {
     this.modalScore.innerHTML = this.score;
     
     // ENEMY/PLAYER/GEM OBJECT INSTANTIATION
-    this.gem = new Gem();
+    this.gem = new Gem(0, 0 , {x:0,y:0}, 20);
     
     // Y position of enemies (smaller number means higher up)
     this.enemyPosition = [61, 145, 227, 308];    
     this.allEnemies = [];    
-    this.player = new Player(202, 396);
+    this.player = new Player(202, 396, {x:0,y:0}, 20);
     
     for(let k in this.enemyPosition) {     
-      this.allEnemies.push(new Enemy(0, this.enemyPosition[k]));
+      this.allEnemies.push(new Enemy(0, this.enemyPosition[k], {x:0,y:0}, 20));
     }
     
     // MODAL    
