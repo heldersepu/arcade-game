@@ -24,7 +24,8 @@ export default class BaseGameObject {
   // Draws player on screen
   render(ctx, resources) {
     ctx.drawImage(resources.get(this.sprite), this.x, this.y)
-    if (true) { // draw some circle to show collision area
+    // draw some circle to show collision area
+    if (window.location.hash == "#debug") { 
       ctx.beginPath();
       ctx.lineWidth=5;
       ctx.strokeStyle = "lime";
