@@ -7,7 +7,6 @@
 export default class Resources {
   constructor() {
     this.resourceCache = {};
-    this.loading = [];
     this.readyCallbacks = [];
   }
 
@@ -21,22 +20,22 @@ export default class Resources {
        * loop through each value and call our image
        * loader on that image file
        */
-      urlOrArr.forEach(function(url) {
-        _load(url);
-      });
+      for(let k in urlOrArr) {      
+        this.loadImage(urlOrArr[k], this);
+      }
     } else {
       /* The developer did not pass an array to this function,
        * assume the value is a string and call our image loader
        * directly.
        */
-      _load(urlOrArr);
+      this.loadImage(urlOrArr, this);
     }
   }
 
   /* This is our private image loader function, it is
    * called by the public image loader function.
    */
-  _load(url) {
+  loadImage(url, global) {
     if (this.resourceCache[url]) {
       /* If this URL has been previously loaded it will exist within
        * our resourceCache array. Just return that image rather
@@ -53,13 +52,13 @@ export default class Resources {
          * so that we can simply return this image if the developer
          * attempts to load this file in the future.
          */
-        this.resourceCache[url] = img;
+        global.resourceCache[url] = img;
 
         /* Once the image is actually loaded and properly cached,
          * call all of the onReady() callbacks we have defined.
          */
-        if(isReady()) {
-          this.readyCallbacks.forEach(function(func) { func(); });
+        if(global.isReady()) {
+          global.readyCallbacks.forEach(function(func) { func(); });
         }
       };
 
@@ -86,8 +85,7 @@ export default class Resources {
   isReady() {
     let ready = true;
     for(let k in this.resourceCache) {
-      if(this.resourceCache.hasOwnProperty(k) &&
-        !this.resourceCache[k]) {
+      if(this.resourceCache.hasOwnProperty(k) && !this.resourceCache[k]) {
           ready = false;
       }
     }

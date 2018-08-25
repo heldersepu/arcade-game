@@ -6,9 +6,7 @@ export default class App {
   constructor() {
     this.playAgainButton = document.querySelector('.play-again');
     this.restartButton = document.querySelector('.restart');
-    
-    // Calls playAgain() function when user clicks reset icon in sidebar
-    restartButton.addEventListener('click', playAgain);
+  
     
     // Starts lives at 3
     this.lives = 3;    
@@ -17,17 +15,17 @@ export default class App {
     this.isDead = false;
     
     this.sidebarLives = document.querySelector('.lives-left');
-    this.sidebarLives.innerHTML = lives;
+    this.sidebarLives.innerHTML = this.lives;
     
     // Sets an initial player score of 0
     this.score = 0;
     
     // Sets score shown in sidebar
     this.sidebarScore = document.querySelector('.score');
-    this.sidebarScore.innerHTML = score;
+    this.sidebarScore.innerHTML = this.score;
     
     this.modalScore = document.querySelector('.modal-score');
-    this.modalScore.innerHTML = score;
+    this.modalScore.innerHTML = this.score;
     
     // ENEMY/PLAYER/GEM OBJECT INSTANTIATION
     this.gem = new Gem();
@@ -37,20 +35,27 @@ export default class App {
     this.allEnemies = [];    
     this.player = new Player(202, 396);
     
-    this.enemyPosition.forEach(function(posY) {
-      // X position of 0 (out of view to the left of the game board), Y of whatever is passed in, and random speed within a range
-      this.allEnemies.push(new Enemy(0, posY));
-    });
+    for(let k in this.enemyPosition) {     
+      this.allEnemies.push(new Enemy(0, this.enemyPosition[k]));
+    }
     
     // MODAL    
     this.modal = document.getElementById('myModal');
     this.closeIcon = document.querySelector('.close');
-        
+
+    this.addEventListeners(this)
+  }
+
+  addEventListeners(global) {
+    // Calls playAgain() function when user clicks reset icon in sidebar
+    this.restartButton.addEventListener('click', this.playAgain);
+    
     // Listens for keydown event (fired when a key is pressed down [regardless of whether it produces a character, unlike keypress]) and sends the keys to Player.handleInput() method
     document.addEventListener('keydown', function(e) {
-      this.player.handleInput(e.keyCode);
-    });    
-    
+      if (!this.isDead)
+        global.player.handleInput(e.keyCode);
+    }); 
+
     // Returns static NodeList of li elements in (ul with) class .char-selector
     this.characters = document.querySelectorAll('.char-selector li');
     
@@ -58,8 +63,8 @@ export default class App {
     this.characters.forEach(character => {
       character.addEventListener('click', () => {
         // Set sprite from user selection
-        this.player.setSprite(character.querySelector('p').innerHTML);
-        playAgain();
+        global.player.setSprite(character.querySelector('p').innerHTML);
+        global.playAgain();
       });
     });
   }
@@ -67,7 +72,7 @@ export default class App {
   enterPress(e) {
     if (e.keyCode === 13) {
       this.modal.classList.remove('modal-visible');
-      playAgain()
+      this.playAgain()
     }
   }
   
@@ -91,13 +96,13 @@ export default class App {
     this.modal.classList.add('modal-visible');
   
     // Calls playAgain() function when user clicks play again button in modal
-    this.playAgainButton.addEventListener('click', playAgain);
+    this.playAgainButton.addEventListener('click', this.playAgain);
   
     // If esc is pressed, closes modal and restarts game (note: keydown used instead of keypress because keypress only works for keys that produce a character value)
     document.addEventListener('keydown', function(e) {
       if (e.keyCode === 27) {
         this.modal.classList.remove('modal-visible');
-        playAgain();
+        this.playAgain();
       }
     });
   
@@ -107,7 +112,7 @@ export default class App {
     // If user clicks modal's close icon, closes modal and restarts game
     this.closeIcon.addEventListener('click', function() {
       this.modal.classList.remove('modal-visible');
-      playAgain();
+      this.playAgain();
     });
   }
 }

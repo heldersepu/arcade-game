@@ -17,24 +17,10 @@ export default class Enemy {
       // Math.random() function returns random number between 0 (inclusive) and 1 (exclusive). Math.floor() returns the largest integer less than or equal to a given number
       this.speed = 70 + Math.floor(Math.random() * 450);
     }
-
-    // When collision occurs, subtracts a life, updates lives displayed in sidebar, and updates score that will be displayed in modal if no lives remaining
-    if ((player.x < (this.x + 50)) && ((player.x + 17) > this.x) && (player.y < (this.y + 50)) && ((50 + player.y) > this.y)) {
-      player.x = 200;
-      player.y = 400;
-      lives--;
-      sidebarLives.innerHTML = lives;
-      modalScore.innerHTML = score;
-      if (lives === 0) {
-        isDead = true;
-        // Calls function that adds class that sets modal to display: block
-        showModal();
-      }
-    }
   }
 
   // Draws enemy on screen
-  render() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  render(ctx, resources) {
+    ctx.drawImage(resources.get(this.sprite), this.x, this.y);
   }
 };

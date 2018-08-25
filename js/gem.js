@@ -21,19 +21,11 @@ export default class Gem {
   }
 
   // Draws gem on screen
-  render() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y)
+  render(ctx, resources) {
+    ctx.drawImage(resources.get(this.sprite), this.x, this.y)
   }
 
   update() {
-    // Not sure why this if statement only works when player approaches gem from below (a higher y value)
-    if ( ((Math.abs( (player.imgWidth + player.x) - (this.x + this.imgWidth) ) < 55)) && ((Math.abs( (player.imgHeight + player.y) - (this.y + this.imgHeight) ) < 55)) ) {
-      // Generates new gem of random color and random x and y value from arrays
-      this.x = this.gemX[Math.floor(Math.random() * this.gemX.length)];
-      this.y = this.gemY[Math.floor(Math.random() * this.gemY.length)];
-      this.sprite = this.collectibles[Math.floor(Math.random() * 3)];
-      score += 5;
-      sidebarScore.innerHTML = score;
-    }
+    
   }
 }

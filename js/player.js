@@ -19,8 +19,8 @@ export default class Player {
   }
 
   // Draws player on screen
-  render() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y)
+  render(ctx, resources) {
+    ctx.drawImage(resources.get(this.sprite), this.x, this.y)
   }
 
   // Hidden p text from li items is passed into this method via forEach loop
@@ -37,12 +37,8 @@ export default class Player {
     }
   }
 
-  // If isDead is false (so it doesn't work when the modal is opened), connects keyboard input to player movement. If statements prevent player movement off screen
+  // connects keyboard input to player movement. If statements prevent player movement off screen
   handleInput(key) {
-    if (isDead) {
-      return;
-    }
-
     if (key === 40 && this.y < 425) { // down
       this.y += 25; 
     }
